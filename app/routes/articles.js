@@ -18,7 +18,7 @@ router.get('/api/articles',(req,res) => {
     Article.find()
     // return all articles as an array
     .then((articles) => {
-    res.status(200).json({ message: 'Get all Articles'});
+    res.status(200).json({ articles: articles});
 })
 // catch any errors that might 
 .catch((error) => {
@@ -41,6 +41,22 @@ router.get('/api/articles',(req,res) => {
  * URI:     /api/articles
  * description: create a new Article
  */
+
+router.post('/api/articles',(req,res) => {
+    console.log('this is log',req.body.article );
+    
+Article.create(req.body.article)
+// on a successful 'create' ,respond with 201 
+// HTTP status  and the content of the new article 
+.then ((newArticle) => {
+    res.status(201).json({ article: newArticle});
+
+})
+// catch any errors that might occure
+.catch((error) => {
+    res.status(500).json({ error: error});
+});
+});
 
  /**
  * Action:     UPDATE
