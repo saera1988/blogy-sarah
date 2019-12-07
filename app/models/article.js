@@ -1,6 +1,13 @@
 // Require necessery NPM packages
 const mongoose = require('mongoose');
 
+// define comment Schema
+const commentSchema = new mongoose.Schema({
+    commentText: String
+}, {timestamps:true})
+
+
+
 // Define Article Schema 
 const articleSchema = new mongoose.Schema({
     title: {type: String, required: true},
@@ -8,12 +15,13 @@ const articleSchema = new mongoose.Schema({
     author: {type: String, required: true},
     published: {type: Boolean, default: true},
     publishedOn: {type: Date, default: Date.now},
+    comments: [commentSchema]
 },{ 
     timestamps: true
 });
 
-// compile our Model on the schema
+// compile our model based on the schema
 const Article = mongoose.model('Article', articleSchema);
-
-//export our model for use 
-module.exports = Article;
+const Comment = mongoose.model('Comment', commentSchema);
+// Export our model for use
+module.exports = {Article, Comment}
